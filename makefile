@@ -6,13 +6,15 @@
 #    By: bsomers <bsomers@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/06/11 11:17:11 by bsomers       #+#    #+#                  #
-#    Updated: 2022/06/11 11:18:56 by bsomers       ########   odam.nl          #
+#    Updated: 2022/08/01 11:59:12 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRC = philo.c
+SRC = 	philo.c \
+		philo_utils.c \
+		philo_time.c
 
 HEADER = philo.h
 

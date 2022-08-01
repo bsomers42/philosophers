@@ -6,11 +6,12 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 12:48:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/06/15 12:48:35 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/08/01 11:59:02 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <unistd.h> //for write
 
 static int	check_empty(const char *nptr)
 {
