@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/01 10:45:50 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/08/01 12:02:54 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/08/24 14:40:12 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,42 @@
 
 void	*philo_func()
 {
+	// pthread_mutex_lock(&mutex);
 	printf("Test in philo_func\n");
 	usleep(300);
-	printf("ending thread\n");
+	// printf("ending thread\n");
+	// pthread_mutex_unlock(&mutex);
 	return(NULL);
 }
 
 void	philosophers(t_num *num_time)
 {
 	pthread_t	philo[num_time->philos]; //as much threads as philos
+	// pthread_mutex_t	mutex;
 	int	i;
 
 	i = 0;
+	// pthread_mutex_init(&mutex, NULL);
 	while (i < num_time->philos)
 	{
-		pthread_create(&philo[i], NULL, &philo_func, NULL);
+		if (pthread_create(&philo[i], NULL, &philo_func, NULL) != 0)
+		{
+			perror("Failed to create thread\n");
+			return ;
+		}
+		printf("Thread %d started\n", i);
 		i++;
 	}
-	display_message(3, 'e');
+	// display_message(i, 'e');
 	i = 0;
 	while (i < num_time->philos)
 	{
-		pthread_join(philo[i], NULL); //like a wait function, but for threads
+		if (pthread_join(philo[i], NULL) != 0) //like a wait function, but for threads
+			return ;
+		printf("Thread %d closed\n", i);
 		i++;
 	}
+	// pthread_mutex_destroy(&mutex);
 }
 
 void	parse_input(char *argv[], int argc, t_num *num_time)
