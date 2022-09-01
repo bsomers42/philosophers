@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         ::::::::             #
-#    makefile                                           :+:    :+:             #
+#    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
 #    By: bsomers <bsomers@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/06/11 11:17:11 by bsomers       #+#    #+#                  #
-#    Updated: 2022/08/26 11:55:59 by bsomers       ########   odam.nl          #
+#    Updated: 2022/09/01 10:28:29 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,21 +14,21 @@ NAME = philo
 
 SRC = 	philo.c \
 		parse.c \
-		philo_time.c
+		utils.c
 
 HEADER = philo.h
 
-CFLAGS = -Wall -Wextra -Werror -pthread -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -pthread -g3 -fsanitize=thread
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-		$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+		cc $(CFLAGS) $(OBJ) -o $(NAME)
 
 %.o: %.c $(HEADER)
-		$(CC) -c $(CFLAGS) -o $@ $<
+		cc -c $(CFLAGS) -o $@ $<
 
 clean:
 		rm -f $(OBJ)
