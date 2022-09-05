@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/06/11 11:17:11 by bsomers       #+#    #+#                  #
-#    Updated: 2022/09/02 14:56:08 by bsomers       ########   odam.nl          #
+#    Updated: 2022/09/05 16:28:20 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,11 +32,9 @@ $(NAME): $(OBJ)
 
 clean:
 		rm -f $(OBJ)
-		@make clean -C $(LIBFT)
 
 fclean: clean
 		rm -f $(NAME)
-
 re:
 		$(MAKE) fclean
 		$(MAKE) all

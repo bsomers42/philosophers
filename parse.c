@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/25 14:50:57 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/02 14:53:22 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/05 15:43:38 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,29 +121,26 @@ int    parse_input(int argc, char *argv[], t_data *data)
 void	init_data(t_philo *philo, t_data *data)
 {
 	int	i;
-	pthread_mutex_t *mutex;
-	// pthread_mutex_t msg;
-	// pthread_mutex_t death;
-
-
 
 	i = 0;
-	// msg = malloc(sizeof(pthread_mutex_t));
-	// death = malloc(sizeof(pthread_mutex_t));
-	mutex = malloc(data->philos * sizeof(pthread_mutex_t));
+	philo->mutex = malloc(data->philos * sizeof(pthread_mutex_t));
 	//malloc check inbouwen!
 	pthread_mutex_init(&philo->msg, NULL);
-	pthread_mutex_init(&philo->death, NULL);
+	pthread_mutex_init(&data->death_mut, NULL);
 
 	while (i < data->philos)
 	{
-		pthread_mutex_init(&mutex[i], NULL);
+		pthread_mutex_init(&philo->mutex[i], NULL);
 		// pthread_mutex_init(&msg[i], NULL);
 		philo[i].num = i + 1;
+		philo[i].left = i;
+		philo[i].right = (i + 1) % data->philos;
 		philo[i].eaten = 0;
-		philo[i].mutex = mutex;
+		philo[i].mutex = philo->mutex;
 		philo[i].data = data;
-		philo[i].last_time_eaten = 0;
+		philo[i].last_time_eaten = get_time();
 		i++;
 	}
+	data->death = false;
+	printf("i: %d, philos: %d\n", i, data->philos);
 }
