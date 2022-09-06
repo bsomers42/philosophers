@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/06/11 11:17:11 by bsomers       #+#    #+#                  #
-#    Updated: 2022/09/05 16:28:20 by bsomers       ########   odam.nl          #
+#    Updated: 2022/09/06 17:55:43 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,23 @@ NAME = philo
 
 SRC = 	philo.c \
 		parse.c \
-		utils.c
+		parse_utils.c \
+		actions.c \
+		get_time.c \
+		init.c \
+		print.c
 
 HEADER = philo.h
 
-CFLAGS = -Wall -Wextra -Werror -pthread #-g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -pthread -g3 -fsanitize=address
 
 OBJ = $(SRC:.c=.o)
+
+ifdef DEBUG
+	CFLAGS += -g3 -fsanitize=address
+else
+	CFLAGS += -Ofast
+endif
 
 all: $(NAME)
 
