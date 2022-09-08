@@ -1,30 +1,33 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         ::::::::             #
-#    Makefile                                           :+:    :+:             #
+#    makefile                                           :+:    :+:             #
 #                                                      +:+                     #
 #    By: bsomers <bsomers@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/06/11 11:17:11 by bsomers       #+#    #+#                  #
-#    Updated: 2022/09/08 15:09:23 by bsomers       ########   odam.nl          #
+#    Updated: 2022/09/08 11:13:04 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 SRC = 	philo.c \
+		philo_time.c \
 		parse.c \
-		utils.c \
-		actions.c \
-		get_time.c \
-		init.c \
-		print.c
+		utils.c
 
 HEADER = philo.h
 
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread -g3 -fsanitize=address
 
 OBJ = $(SRC:.c=.o)
+
+ifdef DEBUG
+	CFLAGS += -g3 -fsanitize=address
+else
+	CFLAGS += -Ofast
+endif
 
 all: $(NAME)
 

@@ -1,16 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parse_utils.c                                      :+:    :+:            */
+/*   utils.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 16:58:07 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/06 16:59:01 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/08 15:12:12 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	destroy_and_free(t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < philo->input->philos)
+	{
+		pthread_mutex_destroy(&philo->data->fork_mut[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&philo->data->death_mut);
+	pthread_mutex_destroy(&philo->data->msg_mut);
+	free (philo->data->fork_mut);
+	free (philo->data);
+	free (philo->input);
+	free (philo);
+}
 
 int	ft_isdigit(int c)
 {

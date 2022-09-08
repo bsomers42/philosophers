@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/29 15:00:52 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/06 15:55:47 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/08 11:13:40 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void philo_msg(int phil, size_t time, char c, t_philo *philo)
 	if (philo->data->death == true)
 	{
 		pthread_mutex_unlock(&philo->data->death_mut);
-		pthread_mutex_unlock(&philo->msg);
+		// pthread_mutex_unlock(&philo->msg);
 		printf("this?\n");
 		return ;
 	}

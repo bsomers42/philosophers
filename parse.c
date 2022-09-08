@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 16:52:35 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/06 18:02:06 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/08 15:18:57 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_input(int argc, char *argv[])
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (i < argc)
@@ -26,7 +26,7 @@ int	check_input(int argc, char *argv[])
 	return (0);
 }
 
-int    parse_input(int argc, char *argv[], t_input *input)
+int	parse_input(int argc, char *argv[], t_input *input)
 {
 	if (check_input(argc, argv) < 0)
 		return (-1);
@@ -41,8 +41,8 @@ int    parse_input(int argc, char *argv[], t_input *input)
 			return (-1);
 	}
 	else
-		input->must_eat = (int)NULL;
-	if (input->philos <= 0 || input->time_die <=0 || input->time_eat <= 0 || \
+		input->must_eat = 0;
+	if (input->philos <= 1 || input->time_die <= 0 || input->time_eat <= 0 || \
 		input->time_sleep <= 0)
 		return (-1);
 	return (0);
