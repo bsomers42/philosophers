@@ -6,11 +6,36 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 16:52:35 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/08 15:18:57 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/09 10:06:42 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	ft_isdigit(int c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+int	ft_isnumber(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i] != '\0' && str[i] == ' ')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i] != '\0')
+	{
+		if (ft_isdigit(str[i]) == 0)
+			return (0);
+		i++;
+	}
+	if (str[i] == '\0' && (str[i - 1] == '-' || str[i - 1] == '+'))
+		return (0);
+	return (1);
+}
 
 int	check_input(int argc, char *argv[])
 {
@@ -42,7 +67,7 @@ int	parse_input(int argc, char *argv[], t_input *input)
 	}
 	else
 		input->must_eat = 0;
-	if (input->philos <= 1 || input->time_die <= 0 || input->time_eat <= 0 || \
+	if (input->philos <= 0 || input->time_die <= 0 || input->time_eat <= 0 || \
 		input->time_sleep <= 0)
 		return (-1);
 	return (0);

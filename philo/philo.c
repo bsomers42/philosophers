@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 16:30:52 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/08 15:19:55 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/09 10:49:59 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,32 @@ void	*philo_routine(void *ptr)
 	}
 }
 
-void	philosophers(t_input *input, t_philo *philo)
+int	philosophers(t_input *input, t_philo *philo)
 {
 	int			i;
-	pthread_t	philo_thr[input->philos];
+	pthread_t	*philo_thr;
 
 	i = 0;
+	philo_thr = malloc(input->philos * sizeof(pthread_t));
+	if (philo_thr == NULL)
+		return (free_structs(philo));
 	philo->data->start = get_time();
 	while (i < input->philos)
 	{
-		pthread_create(&philo_thr[i], NULL, &philo_routine, &philo[i]);
+		if (pthread_create(&philo_thr[i], NULL, &philo_routine, &philo[i]) != 0)
+			return (free(philo_thr), free_structs(philo));
 		i++;
 	}
 	i = 0;
 	while (i < input->philos)
 	{
-		pthread_join(philo_thr[i], NULL);
+		if (pthread_join(philo_thr[i], NULL) != 0)
+			break ;
 		i++;
 	}
-	destroy_and_free(philo);
+	free(philo_thr);
+	destroy_mutexes(philo);
+	return (free_structs(philo));
 }
 
 int	main(int argc, char *argv[])
@@ -62,19 +69,24 @@ int	main(int argc, char *argv[])
 	t_data	*data;
 
 	input = (t_input *)malloc(sizeof(t_input));
-	data = (t_data *)malloc(sizeof(t_data));
+	if (input == NULL)
+		return (0);
 	if (argc > 6 || argc < 5 || parse_input(argc, argv, input) < 0)
+		return (free(input), error_input_msg());
+	data = (t_data *)malloc(sizeof(t_data));
+	if (data == NULL)
 	{
-		printf("Wrong arguments!\nUsage: ./philo a b c d e \n\
-		a = <number of philos*>\n \
-		b = <time to die>\n \
-		c = <time to eat>\n \
-		d = <time to sleep>\n \
-		e = <optional: number of times each philo must eat>\n \
-		*should be at least two, because everyone needs two forks to eat!\n");
+		free(input);
 		return (0);
 	}
 	philo = (t_philo *)malloc(input->philos * sizeof(t_philo));
-	init_data(input, philo, data);
+	if (philo == NULL)
+	{
+		free(input);
+		free(data);
+		return (0);
+	}
+	if (init_data(input, philo, data) < 0)
+		return (0);
 	philosophers(input, philo);
 }

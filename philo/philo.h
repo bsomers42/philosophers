@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 16:30:55 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/08 15:08:37 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/09 10:17:26 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 # define PHILO_H
 
-#include <pthread.h>
-#include <stdbool.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+# include <pthread.h>
+# include <stdbool.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
 
 typedef struct s_input
 {
@@ -31,9 +31,9 @@ typedef struct s_input
 
 typedef struct s_data
 {
-	bool	death;
-	int		enough_eaten;
-	size_t	start;
+	bool			death;
+	int				enough_eaten;
+	size_t			start;
 	pthread_mutex_t	msg_mut;
 	pthread_mutex_t	death_mut;
 	pthread_mutex_t	*fork_mut;
@@ -41,17 +41,16 @@ typedef struct s_data
 
 typedef struct s_philo
 {
-	int	num;
+	int		num;
 	size_t	last_eaten;
-	int	total_eaten;
+	int		total_eaten;
 	t_data	*data;
-	t_input *input;
+	t_input	*input;
 }	t_philo;
-
 
 //parsing and init
 int		parse_input(int argc, char *argv[], t_input *input);
-void	init_data(t_input *input, t_philo *philo, t_data *data);
+int		init_data(t_input *input, t_philo *philo, t_data *data);
 
 //actions
 int		check_death_done(t_philo *philo);
@@ -60,13 +59,14 @@ int		philo_eat(t_philo *philo);
 int		philo_sleep(t_philo *philo);
 
 //time and print
-void	ft_usleep(size_t time);
-size_t	get_time();
+int		ft_usleep(size_t time, t_philo *philo);
+size_t	get_time(void);
 void	philo_msg(int phil, size_t time, char c, t_philo *philo);
+int		error_input_msg(void);
 
-//utils
-int		ft_isnumber(char *str);
+//utils and cleaning
 int		ft_atoi(const char *nptr);
-void	destroy_and_free(t_philo *philo);
+void	destroy_mutexes(t_philo *philo);
+int		free_structs(t_philo *philo);
 
 #endif

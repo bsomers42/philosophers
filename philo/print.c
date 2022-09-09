@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 17:36:29 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/08 15:12:24 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/08 16:12:44 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,16 @@ void	philo_msg(int phil, size_t time, char c, t_philo *philo)
 	if (c == 't')
 		printf("%zu   \033[0;32m%d is thinking\033[0m\n", time, phil);
 	pthread_mutex_unlock(&philo->data->msg_mut);
+}
+
+int	error_input_msg(void)
+{
+	printf("Wrong arguments!\nUsage: ./philo a b c d e \n\
+	a = <number of philos*>\n \
+	b = <time to die>\n \
+	c = <time to eat>\n \
+	d = <time to sleep>\n \
+	e = <optional: number of times each philo must eat>\n \
+	*should be at least two, because everyone needs two forks to eat!\n");
+	return (0);
 }
