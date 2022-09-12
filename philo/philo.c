@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 16:30:52 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/09 10:49:59 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/12 13:02:36 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	*philo_routine(void *ptr)
 	t_philo	*philo;
 
 	philo = ptr;
+	pthread_mutex_lock(&philo->data->death_mut);
+	pthread_mutex_unlock(&philo->data->death_mut);
 	if (philo->num % 2 == 0)
-		usleep(250);
+		usleep(1000);
 	philo->last_eaten = get_time();
 	while (1)
 	{
@@ -34,6 +36,20 @@ void	*philo_routine(void *ptr)
 	}
 }
 
+int	join_threads(t_philo *philo, pthread_t *philo_thr)
+{
+	int	i;
+
+	i = 0;
+	while (i < philo->input->philos)
+	{
+		if (pthread_join(philo_thr[i], NULL) != 0)
+			break ;
+		i++;
+	}
+	return (0);
+}
+
 int	philosophers(t_input *input, t_philo *philo)
 {
 	int			i;
@@ -44,19 +60,20 @@ int	philosophers(t_input *input, t_philo *philo)
 	if (philo_thr == NULL)
 		return (free_structs(philo));
 	philo->data->start = get_time();
+	pthread_mutex_lock(&philo->data->death_mut);
 	while (i < input->philos)
 	{
 		if (pthread_create(&philo_thr[i], NULL, &philo_routine, &philo[i]) != 0)
-			return (free(philo_thr), free_structs(philo));
+		{
+			free(philo_thr);
+			destroy_mutexes(philo);
+			free_structs(philo);
+			return (-1);
+		}
 		i++;
 	}
-	i = 0;
-	while (i < input->philos)
-	{
-		if (pthread_join(philo_thr[i], NULL) != 0)
-			break ;
-		i++;
-	}
+	pthread_mutex_unlock(&philo->data->death_mut);
+	join_threads(philo, philo_thr);
 	free(philo_thr);
 	destroy_mutexes(philo);
 	return (free_structs(philo));

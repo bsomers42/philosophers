@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 17:32:27 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/09 10:06:22 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/12 12:26:45 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ int	check_death_done(t_philo *philo)
 		pthread_mutex_unlock(&philo->data->death_mut);
 		return (1);
 	}
+	pthread_mutex_lock(&philo->data->msg_mut);
 	if (((get_time() - philo->last_eaten) > (size_t)philo->input->time_die))
 	{
-		pthread_mutex_lock(&philo->data->msg_mut);
-		printf("%zu   \033[0;31m%d has died\033[0m\n", get_time() - \
+		printf("%zu   \033[0;31m%d died\033[0m\n", get_time() - \
 		philo->data->start, philo->num);
-		pthread_mutex_unlock(&philo->data->msg_mut);
 		philo->data->death = true;
+		pthread_mutex_unlock(&philo->data->msg_mut);
 		pthread_mutex_unlock(&philo->data->death_mut);
 		return (1);
 	}
+	pthread_mutex_unlock(&philo->data->msg_mut);
 	pthread_mutex_unlock(&philo->data->death_mut);
 	return (0);
 }
