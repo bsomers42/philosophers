@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 16:30:52 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/13 12:57:44 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/22 12:14:06 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*philo_routine(void *ptr)
 	pthread_mutex_lock(&philo->data->death_mut);
 	pthread_mutex_unlock(&philo->data->death_mut);
 	if (philo->num % 2 == 0)
-		usleep(250);
+		ft_usleep_start(250);
 	philo->last_eaten = get_time();
 	while (1)
 	{
@@ -32,7 +32,7 @@ void	*philo_routine(void *ptr)
 			return (NULL);
 		if (check_death_done(philo) != 0)
 			return (NULL);
-		philo_msg(philo->num, get_time() - philo->data->start, 't', philo);
+		philo_msg(philo->num, 't', philo);
 	}
 }
 
@@ -47,6 +47,8 @@ int	join_threads(t_philo *philo, pthread_t *philo_thr)
 			break ;
 		i++;
 	}
+	free(philo_thr);
+	destroy_mutexes(philo);
 	return (0);
 }
 
@@ -59,12 +61,12 @@ int	philosophers(t_input *input, t_philo *philo)
 	philo_thr = malloc(input->philos * sizeof(pthread_t));
 	if (philo_thr == NULL)
 		return (free_structs(philo));
-	philo->data->start = get_time();
 	pthread_mutex_lock(&philo->data->death_mut);
 	while (i < input->philos)
 	{
 		if (pthread_create(&philo_thr[i], NULL, &philo_routine, &philo[i]) != 0)
 		{
+			pthread_mutex_unlock(&philo->data->death_mut);
 			free(philo_thr);
 			destroy_mutexes(philo);
 			free_structs(philo);
@@ -72,10 +74,9 @@ int	philosophers(t_input *input, t_philo *philo)
 		}
 		i++;
 	}
+	philo->data->start = get_time();
 	pthread_mutex_unlock(&philo->data->death_mut);
 	join_threads(philo, philo_thr);
-	free(philo_thr);
-	destroy_mutexes(philo);
 	return (free_structs(philo));
 }
 

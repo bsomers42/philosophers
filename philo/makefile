@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/06/11 11:17:11 by bsomers       #+#    #+#                  #
-#    Updated: 2022/09/12 13:02:25 by bsomers       ########   odam.nl          #
+#    Updated: 2022/09/22 12:24:51 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC = 	philo.c \
 
 HEADER = philo.h
 
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=thread
 
 OBJ = $(SRC:.c=.o)
 

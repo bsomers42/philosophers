@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 16:30:55 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/09 10:17:26 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/22 12:14:45 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,9 @@ int		philo_sleep(t_philo *philo);
 
 //time and print
 int		ft_usleep(size_t time, t_philo *philo);
+int		ft_usleep_start(size_t time);
 size_t	get_time(void);
-void	philo_msg(int phil, size_t time, char c, t_philo *philo);
+void	philo_msg(int phil, char c, t_philo *philo);
 int		error_input_msg(void);
 
 //utils and cleaning

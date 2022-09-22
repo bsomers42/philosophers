@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 17:31:01 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/09 10:45:07 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/22 12:14:39 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,18 @@ int	ft_usleep(size_t time, t_philo *philo)
 		usleep(100);
 		if (check_death_done(philo) != 0)
 			return (1);
+	}
+	return (0);
+}
+
+int	ft_usleep_start(size_t time)
+{
+	size_t	timesleep;
+
+	timesleep = get_time();
+	while (get_time() - timesleep < time)
+	{
+		usleep(100);
 	}
 	return (0);
 }
