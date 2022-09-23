@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 16:30:52 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/22 12:14:06 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/23 16:26:43 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*philo_routine(void *ptr)
 	pthread_mutex_lock(&philo->data->death_mut);
 	pthread_mutex_unlock(&philo->data->death_mut);
 	if (philo->num % 2 == 0)
-		ft_usleep_start(250);
+		ft_usleep_start(100);
 	philo->last_eaten = get_time();
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 17:36:29 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/22 12:58:08 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/23 16:19:22 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ void	philo_msg(int phil, char c, t_philo *philo)
 
 	if (check_death_done(philo) != 0)
 		return ;
-	pthread_mutex_lock(&philo->data->msg_mut);
+	// pthread_mutex_lock(&philo->data->msg_mut);
+	pthread_mutex_lock(&philo->data->death_mut);
 	if (philo->data->death == true || philo->data->enough_eaten == \
 	philo->input->philos)
 	{
-		pthread_mutex_unlock(&philo->data->msg_mut);
+		pthread_mutex_unlock(&philo->data->death_mut);
+		// pthread_mutex_unlock(&philo->data->msg_mut);
 		return ;
 	}
 	time = get_time() - philo->data->start;
@@ -34,9 +36,10 @@ void	philo_msg(int phil, char c, t_philo *philo)
 		printf("%zu   \033[0;34m%d is sleeping\033[0m\n", time, phil);
 	if (c == 't')
 		printf("%zu   \033[0;32m%d is thinking\033[0m\n", time, phil);
+	pthread_mutex_unlock(&philo->data->death_mut);
 	// if (c == 'd')
 	// 	printf("%zu   \033[0;31m%d died\033[0m\n", time, phil);
-	pthread_mutex_unlock(&philo->data->msg_mut);
+	// pthread_mutex_unlock(&philo->data->msg_mut);
 }
 
 int	error_input_msg(void)
