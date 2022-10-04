@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 16:30:55 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/22 12:14:45 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/04 10:23:34 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_data
 	bool			death;
 	int				enough_eaten;
 	size_t			start;
-	pthread_mutex_t	msg_mut;
 	pthread_mutex_t	death_mut;
 	pthread_mutex_t	*fork_mut;
 }	t_data;
@@ -57,6 +56,7 @@ int		check_death_done(t_philo *philo);
 int		philo_take_fork(t_philo *philo);
 int		philo_eat(t_philo *philo);
 int		philo_sleep(t_philo *philo);
+void	*one_philo(t_philo *philo);
 
 //time and print
 int		ft_usleep(size_t time, t_philo *philo);
@@ -69,5 +69,7 @@ int		error_input_msg(void);
 int		ft_atoi(const char *nptr);
 void	destroy_mutexes(t_philo *philo);
 int		free_structs(t_philo *philo);
+int		clean_up_after_error(t_philo *philo, pthread_t *philo_thr);
+int		join_threads(t_philo *philo, pthread_t *philo_thr, pthread_t mon_thr);
 
 #endif

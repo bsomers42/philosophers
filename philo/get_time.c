@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 17:31:01 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/22 12:14:39 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/03 14:42:43 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ int	ft_usleep_start(size_t time)
 
 	timesleep = get_time();
 	while (get_time() - timesleep < time)
-	{
 		usleep(100);
-	}
 	return (0);
 }
 

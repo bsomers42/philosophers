@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/06 16:59:25 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/09 10:39:52 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/03 17:41:17 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	init_mutexes(t_data *data, t_input *input)
 			return (-1);
 		i++;
 	}
-	if (pthread_mutex_init(&data->msg_mut, NULL) != 0)
-		return (-1);
 	if (pthread_mutex_init(&data->death_mut, NULL) != 0)
 		return (-1);
 	return (0);

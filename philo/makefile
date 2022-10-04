@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/06/11 11:17:11 by bsomers       #+#    #+#                  #
-#    Updated: 2022/09/23 16:30:04 by bsomers       ########   odam.nl          #
+#    Updated: 2022/10/04 11:49:27 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,15 +14,16 @@ NAME = philo
 
 SRC = 	philo.c \
 		parse.c \
-		utils.c \
+		parse_utils.c \
 		actions.c \
 		get_time.c \
 		init.c \
-		print.c
+		print.c \
+		cleanup.c
 
 HEADER = philo.h
 
-CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror
 
 OBJ = $(SRC:.c=.o)
 
